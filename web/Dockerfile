@@ -7,7 +7,7 @@ COPY rootfs/ /
 
 RUN \
 	apt-dpkg-wrap apt-get update && \
-	apt-dpkg-wrap apt-get install -y git cron nginx-extras jitsi-meet-web && \
+	apt-dpkg-wrap apt-get install -y vim git cron nginx-extras jitsi-meet-web && \
 	apt-dpkg-wrap apt-get -d install -y jitsi-meet-web-config && \
     dpkg -x /var/cache/apt/archives/jitsi-meet-web-config*.deb /tmp/pkg && \
     mv /tmp/pkg/usr/share/jitsi-meet-web-config/config.js /defaults && \
@@ -18,7 +18,7 @@ RUN \
 RUN git clone https://github.com/luanvuhlu/jitsiLocalRecorder && \
 	cd jitsiLocalRecorder && \
 	bash install.sh && \
-	cd ../ && \
+	cd ../
 RUN \
 	chmod a+x /usr/local/bin/certbot-auto && \
 	certbot-auto --noninteractive --install-only
