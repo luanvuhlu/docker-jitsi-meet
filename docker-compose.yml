@@ -52,6 +52,7 @@ services:
             - '5222:5222'
             - '5347:5347'
             - '5280:5280'
+        hostname: meet.jitsi
         volumes:
             - ${CONFIG}/prosody/config:/config:Z
             - ${CONFIG}/prosody/prosody-plugins-custom:/prosody-plugins-custom:Z
@@ -164,6 +165,24 @@ services:
             - TZ
         depends_on:
             - prosody
+        networks:
+            meet.jitsi:
+       # Video bridge
+    jirecon:
+        image: jitsi/jirecon:latest
+        build:
+            context: ./jirecon
+        restart: ${RESTART_POLICY}
+        devices:
+            - /dev/snd:/dev/snd
+        ports:
+                - '2323:2323'
+                - '2333:2333'
+        hostname: jirecon.meet.jitsi
+        depends_on:
+            - jvb 
+        volumes:
+            - ${CONFIG}/jirecon:/config:Z
         networks:
             meet.jitsi:
 
