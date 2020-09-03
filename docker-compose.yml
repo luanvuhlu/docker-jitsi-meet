@@ -178,11 +178,14 @@ services:
         ports:
                 - '2323:2323'
                 - '2333:2333'
+                - '9000:8000'
         hostname: jirecon.meet.jitsi
+        command: java -agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=n -Dorg.jitsi.impl.neomedia.device.PulseAudioSystem.disabled=true -Dorg.jitsi.impl.neomedia.device.PortAudioSystem.disabled=true -jar ./app.jar --conf=/config/jirecon.properties --time=20 luan
         depends_on:
             - jvb 
         volumes:
             - ${CONFIG}/jirecon:/config:Z
+            - /home/ubuntu/output:/app/output
         networks:
             meet.jitsi:
 
